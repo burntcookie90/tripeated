@@ -18,7 +18,7 @@ import ui.viewModel
 
 object LoginCoordinates: Coordinates {
 
-  @Component interface LoginScreenComponent: ScreenComponent<LoginViewModel> {
+  interface LoginScreenComponent: ScreenComponent<LoginViewModel> {
     override val viewModelFactory: () -> LoginViewModel
   }
 

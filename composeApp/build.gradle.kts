@@ -124,8 +124,11 @@ compose.desktop {
 }
 
 dependencies {
-  // 1. Configure code generation into the common source set
   kspCommonMainMetadata(libs.kotlin.inject.compiler.ksp)
+}
+
+ksp {
+  arg("me.tatarka.inject.dumpGraph", "false")
 }
 
 fun KotlinMultiplatformExtension.configureCommonMainKsp() {
