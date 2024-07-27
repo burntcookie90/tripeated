@@ -19,9 +19,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.gitlive.firebase.Firebase
+import di.AppComponent
+import di.FirebaseComponent
+import di.ViewModelComponent
+import di.create
 import navigation.LoggedOutDestinations
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import service.AuthService
@@ -30,9 +37,10 @@ import ui.login.LoginCoordinates.login
 @Composable
 @Preview
 fun App() {
+  val appComponent = remember { AppComponent::class.create(
+  ) }
   val navController = rememberNavController()
   var canGoBack by remember { mutableStateOf(false) }
-  val authService = AuthService()
   MaterialTheme {
     Scaffold(
       modifier = Modifier.fillMaxSize(),
@@ -65,7 +73,7 @@ fun App() {
           }
         }
 
-        login()
+        login(appComponent)
 
         composable(LoggedOutDestinations.Register.route) {
           canGoBack = true
@@ -83,13 +91,13 @@ fun App() {
               mutableStateOf(false)
             }
 
-            LaunchedEffect(shouldSubmitReg) {
-              if (shouldSubmitReg) {
-                val user = authService.register(email, password)
-                println(user)
-                shouldSubmitReg = false
-              }
-            }
+//            LaunchedEffect(shouldSubmitReg) {
+//              if (shouldSubmitReg) {
+//                val user = authService.register(email, password)
+//                println(user)
+//                shouldSubmitReg = false
+//              }
+//            }
 
             TextField(
               value = email,

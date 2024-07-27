@@ -1,6 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
   alias(libs.plugins.kotlinMultiplatform)
@@ -13,6 +15,7 @@ plugins {
 }
 
 kotlin {
+
 
   androidTarget {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -67,6 +70,8 @@ kotlin {
       implementation(compose.desktop.currentOs)
     }
   }
+
+  configureCommonMainKsp()
 }
 
 android {
@@ -121,11 +126,19 @@ compose.desktop {
 dependencies {
   // 1. Configure code generation into the common source set
   kspCommonMainMetadata(libs.kotlin.inject.compiler.ksp)
-
-  // 2. Configure code generation into each KMP target source set
-  add("kspAndroid", libs.kotlin.inject.compiler.ksp)
-  add("kspIosX64", libs.kotlin.inject.compiler.ksp)
-  add("kspIosArm64", libs.kotlin.inject.compiler.ksp)
-  add("kspIosSimulatorArm64", libs.kotlin.inject.compiler.ksp)
 }
+
+fun KotlinMultiplatformExtension.configureCommonMainKsp() {
+  sourceSets.named("commonMain").configure {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+  }
+
+  project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+    if(name != "kspCommonMainKotlinMetadata") {
+      dependsOn("kspCommonMainKotlinMetadata")
+    }
+  }
+}
+
+
 

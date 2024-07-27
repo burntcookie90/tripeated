@@ -2,14 +2,27 @@ package service
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
+import di.AppScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import me.tatarka.inject.annotations.Inject
 import models.ui.UiUser
 
+@Inject
+@AppScope
 class AuthService {
   private val auth = Firebase.auth
 
-  suspend fun register(email: String, password: String) : UiUser? {
-    val result = auth.createUserWithEmailAndPassword(email, password)
-
-    return result.user?.let { UiUser(it.uid, it.email!!) }
+  suspend fun register(email: String, password: String) {
+    auth.createUserWithEmailAndPassword(email, password)
   }
+
+  suspend fun login(email: String, password: String) {
+    auth.signInWithEmailAndPassword(email, password)
+  }
+
+  fun authState(): Flow<UiUser> = auth.authStateChanged.map {
+    it?.let { UiUser.LoggedIn(it.uid, it.email ?: "") } ?: UiUser.LoggedOut
+  }
+
 }
