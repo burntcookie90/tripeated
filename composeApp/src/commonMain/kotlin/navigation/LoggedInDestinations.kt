@@ -1,15 +1,14 @@
 package navigation
 
+import kotlinx.serialization.Serializable
+
 interface LoggedInDestinations : TripeatedDestination {
-  object MyLists: LoggedInDestinations {
-    override val route = "lists"
-  }
+  @Serializable
+  object MyLists: LoggedInDestinations
 
-  object Profile : LoggedInDestinations {
-    override val route = "profile"
-  }
+  @Serializable
+  object Profile : LoggedInDestinations
 
-  object Settings : LoggedInDestinations {
-    override val route = "settings"
-  }
+  @Serializable
+  object Settings : LoggedInDestinations
 }

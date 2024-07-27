@@ -5,6 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.toRoute
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
 import kotlin.time.Duration.Companion.seconds
@@ -109,13 +111,13 @@ fun <M, E, V : MoleculeViewModel<M, E>> ViewModelScreen(
 }
 
 @Composable
-fun <M, E, V : MoleculeViewModel<M, E>> Coordinates.ViewModelScreen(
+fun <M, E, V : MoleculeViewModel<M, E>> NavBackStackEntry.ViewModelScreen(
   viewModel: V,
   content: @Composable MoleculeViewModelScope<M, E>.() -> Unit,
 ) {
   ViewModelScreen(
     viewModel = viewModel,
-    tag = route,
+    tag = toRoute(),
     content = content,
   )
 }

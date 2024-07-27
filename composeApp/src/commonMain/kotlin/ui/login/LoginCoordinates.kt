@@ -29,12 +29,10 @@ object LoginCoordinates: Coordinates {
     override val viewModelFactory: () -> LoginViewModel
   }
 
-  override val route: String = LoggedOutDestinations.Login.route
-
   fun NavGraphBuilder.login(
     loginScreenComponent: LoginScreenComponent,
   ) {
-    composable(LoggedOutDestinations.Login.route) {
+    composable<LoggedOutDestinations.Login> {
       ViewModelScreen(loginScreenComponent.viewModel()) {->
         LoginScreen(model, dispatch)
       }
