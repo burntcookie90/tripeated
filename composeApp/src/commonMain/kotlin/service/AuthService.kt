@@ -21,6 +21,8 @@ class AuthService {
     auth.signInWithEmailAndPassword(email, password)
   }
 
+  suspend fun logout() = auth.signOut()
+
   fun authState(): Flow<UiUser> = auth.authStateChanged.map {
     it?.let { UiUser.LoggedIn(it.uid, it.email ?: "") } ?: UiUser.LoggedOut
   }

@@ -22,7 +22,9 @@ class LoginPresenter(
     var model by remember { mutableStateOf(lastModel) }
 
     LaunchedEffect(Unit) {
-
+      authService.authState().collect { user ->
+        model = model.copy(currentUser = user)
+      }
     }
 
     ConsumeEvents(events) { event ->
