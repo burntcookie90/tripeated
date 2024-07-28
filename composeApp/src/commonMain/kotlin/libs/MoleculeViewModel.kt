@@ -12,7 +12,6 @@ import app.cash.molecule.moleculeFlow
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainCoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -111,13 +110,14 @@ fun <M, E, V : MoleculeViewModel<M, E>> ViewModelScreen(
 }
 
 @Composable
-fun <M, E, V : MoleculeViewModel<M, E>> NavBackStackEntry.ViewModelScreen(
+fun <M, E, V : MoleculeViewModel<M, E>> ViewModelScreen(
+  navBackStackEntry: NavBackStackEntry,
   viewModel: V,
-  content: @Composable MoleculeViewModelScope<M, E>.() -> Unit,
+  content: @Composable() (MoleculeViewModelScope<M, E>.() -> Unit),
 ) {
   ViewModelScreen(
     viewModel = viewModel,
-    tag = toRoute(),
+    tag = navBackStackEntry.toRoute(),
     content = content,
   )
 }

@@ -12,34 +12,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import di.injectedViewModel
 import libs.Coordinates
 import libs.ViewModelScreen
-import me.tatarka.inject.annotations.Component
-import me.tatarka.inject.annotations.Inject
 import navigation.LoggedOutDestinations
-import ui.ScreenComponent
-import ui.viewModel
 
 object LoginCoordinates: Coordinates {
 
-  interface LoginScreenComponent: ScreenComponent<LoginViewModel> {
-    override val viewModelFactory: () -> LoginViewModel
-  }
-
-  fun NavGraphBuilder.login(
-    loginScreenComponent: LoginScreenComponent,
-  ) {
+  fun NavGraphBuilder.login() {
     composable<LoggedOutDestinations.Login> {
-      ViewModelScreen(loginScreenComponent.viewModel()) {->
+      ViewModelScreen(
+        navBackStackEntry = it,
+        viewModel = injectedViewModel<LoginViewModel>()
+      ) { ->
         LoginScreen(model, dispatch)
       }
     }
   }
 
-  @Inject
   @Composable
   fun LoginScreen(
     model: LoginModel,

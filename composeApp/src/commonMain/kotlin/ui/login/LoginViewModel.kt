@@ -1,5 +1,6 @@
 package ui.login
 
+import di.ViewModelScope
 import libs.MoleculeViewModel
 import me.tatarka.inject.annotations.Inject
 
