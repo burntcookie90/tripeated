@@ -9,7 +9,3 @@ class UserLoggedInViewModel(presenter: UserLoggedInPresenter) :
     initialState = UserLoggedInModel(),
     presenter = { model, events -> presenter.present(model, events) }
   )
-
-interface UserLoggedInViewModelComponent{
-  val viewModelFactory: () -> UserLoggedInViewModel
-}
