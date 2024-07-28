@@ -1,4 +1,4 @@
-package navigation
+package navigation.destinations
 
 import kotlinx.serialization.Serializable
 

@@ -14,11 +14,11 @@ import me.tatarka.inject.annotations.Inject
 import service.AuthService
 
 @Inject
-class LoginPresenter(
+class LoginScreenPresenter(
   private val authService: AuthService
-) : Presenter<LoginModel, LoginEvents>{
+) : Presenter<LoginScreenModel, LoginScreenEvents>{
   @Composable
-  override fun present(lastModel: LoginModel, events: Flow<LoginEvents>): LoginModel {
+  override fun present(lastModel: LoginScreenModel, events: Flow<LoginScreenEvents>): LoginScreenModel {
     var model by remember { mutableStateOf(lastModel) }
 
     LaunchedEffect(Unit) {
@@ -29,7 +29,7 @@ class LoginPresenter(
 
     ConsumeEvents(events) { event ->
       when (event) {
-        is LoginEvents.Login -> {
+        is LoginScreenEvents.Login -> {
           launch {
             authService.login(event.email, event.password)
           }

@@ -129,6 +129,7 @@ dependencies {
 
 ksp {
   arg("me.tatarka.inject.dumpGraph", "false")
+  arg("me.tatarka.inject.generateCompanionExtensions", "true")
 }
 
 fun KotlinMultiplatformExtension.configureCommonMainKsp() {

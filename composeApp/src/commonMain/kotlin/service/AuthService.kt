@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.map
 import me.tatarka.inject.annotations.Inject
 import models.ui.UiUser
 
+@AppScope
 @Inject
 class AuthService {
   private val auth = Firebase.auth

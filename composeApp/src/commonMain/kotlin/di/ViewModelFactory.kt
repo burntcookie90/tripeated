@@ -10,7 +10,7 @@ import me.tatarka.inject.annotations.Inject
 import kotlin.reflect.KClass
 
 class ViewModelFactory @Inject constructor(
-  private val creators: Map<KClass<out ViewModel>, vmFactory<*>>
+  private val creators: Map<KClass<out ViewModel>, VmFactory<*>>
 ) : ViewModelProvider.Factory {
   override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
     val creator = creators[modelClass]

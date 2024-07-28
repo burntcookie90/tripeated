@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import di.injectedViewModel
 import libs.Coordinates
-import navigation.LoggedOutDestinations
+import libs.ViewModelScreen
+import navigation.destinations.LoggedOutDestinations
 
 object RegisterScreenCoordinates : Coordinates {
   fun NavGraphBuilder.register() = composable<LoggedOutDestinations.Register> {
-    composable<LoggedOutDestinations.Register> {
+    ViewModelScreen(it, injectedViewModel<RegisterScreenViewModel>()) {
       Column(modifier = Modifier.fillMaxSize()) {
         Text("register!")
         var email by remember {
@@ -32,14 +34,6 @@ object RegisterScreenCoordinates : Coordinates {
         var shouldSubmitReg by remember {
           mutableStateOf(false)
         }
-
-//            LaunchedEffect(shouldSubmitReg) {
-//              if (shouldSubmitReg) {
-//                val user = authService.register(email, password)
-//                println(user)
-//                shouldSubmitReg = false
-//              }
-//            }
 
         TextField(
           value = email,

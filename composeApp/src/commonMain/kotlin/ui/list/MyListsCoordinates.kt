@@ -2,9 +2,9 @@ package ui.list
 
 import androidx.compose.material.Text
 import libs.Coordinates
-import navigation.AuthenticatedDestination
-import navigation.LoggedInDestinations
-import navigation.screen
+import navigation.auth.AuthenticatedDestination
+import navigation.destinations.LoggedInDestinations
+import navigation.auth.screen
 
 object MyListsCoordinates : Coordinates {
   fun AuthenticatedDestination.myLists() = screen<LoggedInDestinations.MyLists> {

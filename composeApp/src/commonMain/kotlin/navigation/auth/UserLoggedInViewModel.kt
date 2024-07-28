@@ -1,4 +1,4 @@
-package navigation
+package navigation.auth
 
 import libs.MoleculeViewModel
 import me.tatarka.inject.annotations.Inject

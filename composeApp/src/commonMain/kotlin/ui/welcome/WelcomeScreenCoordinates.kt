@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import libs.Coordinates
-import navigation.LoggedOutDestinations
+import navigation.destinations.LoggedOutDestinations
 
 object WelcomeScreenCoordinates : Coordinates {
   fun NavGraphBuilder.welcome(

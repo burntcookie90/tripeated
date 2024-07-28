@@ -1,4 +1,4 @@
-package navigation
+package navigation.auth
 
 data class UserLoggedInModel(
   val state: AuthState = AuthState.LOADING,

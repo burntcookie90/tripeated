@@ -19,8 +19,9 @@ import di.AppComponent
 import di.LocalViewModelFactory
 import di.ViewModelComponent
 import di.create
-import navigation.LoggedOutDestinations
-import navigation.RootDestination
+import navigation.destinations.LoggedOutDestinations
+import navigation.destinations.RootDestination
+import navigation.destinations.TripeatedRoot
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.login.LoginCoordinates.login
 import ui.register.RegisterScreenCoordinates.register
@@ -29,12 +30,15 @@ import ui.welcome.WelcomeScreenCoordinates.welcome
 @Composable
 @Preview
 fun App() {
-  val appComponent = remember { AppComponent::class.create(
-    viewModelComponent = ViewModelComponent::class.create()
-  ) }
+  val appComponent = remember {
+    AppComponent.create()
+  }
+  val viewModelComponent = remember(appComponent) {
+    ViewModelComponent.create(appComponent)
+  }
 
   val navController = rememberNavController()
-  CompositionLocalProvider(LocalViewModelFactory provides appComponent.viewModelComponent.viewModelFactory) {
+  CompositionLocalProvider(LocalViewModelFactory provides viewModelComponent.viewModelFactory) {
     MaterialTheme {
       Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -52,25 +56,29 @@ fun App() {
           )
         },
       ) {
-        NavHost(navController, startDestination = RootDestination.LoggedOut) {
-          //        val appDestinationScope = AppDestinationImpl(
-          //          appComponent = appComponent,
-          //          navGraphBuilder = this@NavHost,
-          //          navController = navController
-          //        )
-          navigation<RootDestination.LoggedOut>(startDestination = LoggedOutDestinations.Welcome) {
-            welcome(
-              navigateToLogin = {
-                navController.navigate(LoggedOutDestinations.Login)
-              },
-              navigateToRegister = {
-                navController.navigate(LoggedOutDestinations.Register)
-              }
-            )
-            login()
-            register()
-          }
-        }
+        NavHost(
+          navController = navController,
+          startDestination = RootDestination.LoggedOut,
+          route = TripeatedRoot::class,
+          builder = {
+            //        val appDestinationScope = AppDestinationImpl(
+            //          appComponent = appComponent,
+            //          navGraphBuilder = this@NavHost,
+            //          navController = navController
+            //        )
+            navigation<RootDestination.LoggedOut>(startDestination = LoggedOutDestinations.Welcome) {
+              welcome(
+                navigateToLogin = {
+                  navController.navigate(LoggedOutDestinations.Login)
+                },
+                navigateToRegister = {
+                  navController.navigate(LoggedOutDestinations.Register)
+                }
+              )
+              login()
+              register()
+            }
+          })
       }
     }
   }

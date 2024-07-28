@@ -17,7 +17,7 @@ import androidx.navigation.compose.composable
 import di.injectedViewModel
 import libs.Coordinates
 import libs.ViewModelScreen
-import navigation.LoggedOutDestinations
+import navigation.destinations.LoggedOutDestinations
 
 object LoginCoordinates: Coordinates {
 
@@ -25,7 +25,7 @@ object LoginCoordinates: Coordinates {
     composable<LoggedOutDestinations.Login> {
       ViewModelScreen(
         navBackStackEntry = it,
-        viewModel = injectedViewModel<LoginViewModel>()
+        viewModel = injectedViewModel<LoginScreenViewModel>()
       ) { ->
         LoginScreen(model, dispatch)
       }
@@ -34,8 +34,8 @@ object LoginCoordinates: Coordinates {
 
   @Composable
   fun LoginScreen(
-    model: LoginModel,
-    dispatch: (LoginEvents) -> Unit
+    model: LoginScreenModel,
+    dispatch: (LoginScreenEvents) -> Unit
   ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -51,7 +51,7 @@ object LoginCoordinates: Coordinates {
         onValueChange = { password = it },
         visualTransformation = PasswordVisualTransformation()
       )
-      Button(onClick = { dispatch(LoginEvents.Login(email, password)) }) {
+      Button(onClick = { dispatch(LoginScreenEvents.Login(email, password)) }) {
         Text("Login")
       }
     }

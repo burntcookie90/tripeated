@@ -1,0 +1,3 @@
+package navigation.destinations
+
+interface TripeatedDestination

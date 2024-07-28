@@ -1,6 +1,9 @@
-package navigation
+package navigation.destinations
 
 import kotlinx.serialization.Serializable
+
+@Serializable
+object TripeatedRoot: TripeatedDestination
 
 interface RootDestination : TripeatedDestination {
   @Serializable

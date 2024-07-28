@@ -1,4 +1,4 @@
-package navigation
+package navigation.auth
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.foundation.layout.Box
@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import di.injectedViewModel
 import libs.ViewModelScreen
+import navigation.destinations.RootDestination
+import navigation.destinations.TripeatedDestination
 
 interface AuthenticatedDestination {
   val navGraphBuilder: NavGraphBuilder

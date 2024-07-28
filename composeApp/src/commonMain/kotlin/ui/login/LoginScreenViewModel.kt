@@ -1,13 +1,12 @@
 package ui.login
 
-import di.ViewModelScope
 import libs.MoleculeViewModel
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class LoginViewModel(
-  presenter: LoginPresenter
-) : MoleculeViewModel<LoginModel, LoginEvents>(
-  initialState = LoginModel(loginStatus = false),
+class LoginScreenViewModel(
+  presenter: LoginScreenPresenter
+) : MoleculeViewModel<LoginScreenModel, LoginScreenEvents>(
+  initialState = LoginScreenModel(loginStatus = false),
   presenter = { lastModel, events -> presenter.present(lastModel, events) }
 )
