@@ -19,10 +19,13 @@ import di.AppComponent
 import di.LocalViewModelFactory
 import di.ViewModelComponent
 import di.create
+import navigation.auth.AuthenticatedDestinationImpl
+import navigation.destinations.LoggedInDestinations
 import navigation.destinations.LoggedOutDestinations
 import navigation.destinations.RootDestination
 import navigation.destinations.TripeatedRoot
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.list.MyListsCoordinates.myLists
 import ui.login.LoginCoordinates.login
 import ui.register.RegisterScreenCoordinates.register
 import ui.welcome.WelcomeScreenCoordinates.welcome
@@ -58,14 +61,22 @@ fun App() {
       ) {
         NavHost(
           navController = navController,
-          startDestination = RootDestination.LoggedOut,
+          startDestination = RootDestination.LoggedIn,
           route = TripeatedRoot::class,
           builder = {
-            //        val appDestinationScope = AppDestinationImpl(
-            //          appComponent = appComponent,
-            //          navGraphBuilder = this@NavHost,
-            //          navController = navController
-            //        )
+            navigation<RootDestination.LoggedIn>(startDestination = LoggedInDestinations.MyLists) {
+              val scope = AuthenticatedDestinationImpl(
+                navGraphBuilder = this,
+                navController = navController,
+                onLoggedOut = {
+                  navController.navigate(RootDestination.LoggedOut)
+                }
+              )
+
+              with (scope) {
+                myLists()
+              }
+            }
             navigation<RootDestination.LoggedOut>(startDestination = LoggedOutDestinations.Welcome) {
               welcome(
                 navigateToLogin = {
