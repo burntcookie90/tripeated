@@ -4,9 +4,9 @@ import libs.MoleculeViewModel
 import me.tatarka.inject.annotations.Inject
 
 @Inject
-class MyListsViewModel(
-  presenter: MyListsPresenter
-) : MoleculeViewModel<MyListsModel, MyListsEvent>(
-  initialState = MyListsModel(),
+class HomeViewModel(
+  presenter: HomePresenter
+) : MoleculeViewModel<HomeModel, HomeEvents>(
+  initialState = HomeModel(),
   presenter = { model, events -> presenter.present(model, events) }
 )

@@ -25,7 +25,7 @@ import navigation.destinations.LoggedOutDestinations
 import navigation.destinations.RootDestination
 import navigation.destinations.TripeatedRoot
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.list.MyListsCoordinates.myLists
+import ui.list.HomeCoordinates.myLists
 import ui.login.LoginCoordinates.login
 import ui.register.RegisterScreenCoordinates.register
 import ui.welcome.WelcomeScreenCoordinates.welcome
@@ -64,7 +64,7 @@ fun App() {
           startDestination = RootDestination.LoggedIn,
           route = TripeatedRoot::class,
           builder = {
-            navigation<RootDestination.LoggedIn>(startDestination = LoggedInDestinations.MyLists) {
+            navigation<RootDestination.LoggedIn>(startDestination = LoggedInDestinations.Home) {
               val scope = AuthenticatedDestinationImpl(
                 navGraphBuilder = this,
                 navController = navController,
@@ -73,7 +73,7 @@ fun App() {
                 }
               )
 
-              with (scope) {
+              with(scope) {
                 myLists()
               }
             }
@@ -86,7 +86,14 @@ fun App() {
                   navController.navigate(LoggedOutDestinations.Register)
                 }
               )
-              login()
+              login(
+                onLoginSuccess = {
+                  navController.navigate(TripeatedRoot) {
+                    popUpTo<TripeatedRoot>() {
+                      inclusive = true
+                    }
+                  }
+                })
               register()
             }
           })

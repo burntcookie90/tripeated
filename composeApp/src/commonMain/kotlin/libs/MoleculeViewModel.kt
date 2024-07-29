@@ -117,7 +117,7 @@ fun <M, E, V : MoleculeViewModel<M, E>> ViewModelScreen(
 ) {
   ViewModelScreen(
     viewModel = viewModel,
-    tag = navBackStackEntry.toRoute(),
+    tag = navBackStackEntry.destination.route,
     content = content,
   )
 }

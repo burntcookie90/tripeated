@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 interface LoggedInDestinations : TripeatedDestination {
   @Serializable
-  object MyLists: LoggedInDestinations
+  object Home: LoggedInDestinations
 
   @Serializable
   object Profile : LoggedInDestinations

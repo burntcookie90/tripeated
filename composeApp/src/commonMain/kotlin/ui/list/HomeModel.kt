@@ -1,5 +1,5 @@
 package ui.list
 
-data class MyListsModel(
+data class HomeModel(
   val lists: List<String> = emptyList()
 )

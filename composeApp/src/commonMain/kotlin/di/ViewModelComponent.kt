@@ -6,7 +6,7 @@ import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
 import me.tatarka.inject.annotations.Scope
 import navigation.auth.UserLoggedInViewModel
-import ui.list.MyListsViewModel
+import ui.list.HomeViewModel
 import ui.login.LoginScreenViewModel
 import ui.register.RegisterScreenViewModel
 import kotlin.reflect.KClass
@@ -42,8 +42,8 @@ abstract class ViewModelComponent(
 
   @Provides
   @IntoMap
-  protected fun myLists(factory: () -> MyListsViewModel): Pair<KClass<out ViewModel>, VmFactory<*>> =
-    MyListsViewModel::class to factory
+  protected fun myLists(factory: () -> HomeViewModel): Pair<KClass<out ViewModel>, VmFactory<*>> =
+    HomeViewModel::class to factory
 
   companion object
 }

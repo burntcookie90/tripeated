@@ -10,21 +10,32 @@ import kotlinx.coroutines.launch
 import libs.ConsumeEvents
 import libs.Presenter
 import me.tatarka.inject.annotations.Inject
+import models.database.DbTripTemplate
 import service.AuthService
+import service.TripTemplateService
 
 @Inject
-class MyListsPresenter(
-  private val authService: AuthService
-) : Presenter<MyListsModel, MyListsEvent> {
+class HomePresenter(
+  private val authService: AuthService,
+  private val tripTemplateService: TripTemplateService,
+) : Presenter<HomeModel, HomeEvents> {
   @Composable
-  override fun present(lastModel: MyListsModel, events: Flow<MyListsEvent>): MyListsModel {
+  override fun present(lastModel: HomeModel, events: Flow<HomeEvents>): HomeModel {
     var model by remember { mutableStateOf(lastModel) }
 
     ConsumeEvents(events) { event ->
       when (event) {
-        is MyListsEvent.Logout -> {
+        is HomeEvents.Logout -> {
           launch {
             authService.logout()
+          }
+        }
+
+        is HomeEvents.AddTripTemplate -> {
+          launch {
+            tripTemplateService.addTripTemplate(
+              DbTripTemplate(name = event.name)
+            )
           }
         }
       }
